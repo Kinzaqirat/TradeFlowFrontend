@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #08111f;
+  --bg-surface: #0c1a2e;
+  --bg-elevated: #091622;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-muted: rgba(255, 255, 255, 0.05);
+  
+  --accent-green: #00e5b3;
+  --accent-green-dim: rgba(0, 229, 179, 0.1);
+  --accent-teal: #00c9a7;
+  
+  --accent-red: #ff4d6a;
+  --accent-red-dim: rgba(255, 77, 106, 0.1);
+  
+  --accent-blue: #4493f8;
+  --accent-blue-dim: rgba(68, 147, 248, 0.1);
+  
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.65);
+  --text-muted: rgba(255, 255, 255, 0.38);
+  
+  --sidebar-width: 260px;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.01em;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .font-syne {
+  font-family: 'Syne', sans-serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ── Custom Utilities ───────────────────────────────────────────── */
+
+.glass-card {
+  background: linear-gradient(145deg, rgba(13, 19, 28, 0.92) 0%, rgba(10, 22, 40, 0.95) 100%);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 22px;
+}
+
+.glass-panel {
+  background: rgba(12, 20, 32, 0.8);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.neon-border {
+  border-color: rgba(0, 229, 179, 0.45);
+  box-shadow: 0 0 0 3px rgba(0, 229, 179, 0.07);
+}
+
+.night-sky-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(175deg, #08111f 0%, #0c1a2e 45%, #091622 100%);
+}
+
+.city-glow-teal {
+  position: absolute;
+  width: 420px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0, 210, 160, 0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #00e5b3, #00c9a7);
+  color: #08111f;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  border-radius: 11px;
+  transition: filter 0.2s, transform 0.15s;
+}
+.btn-primary:hover:not(:disabled) { filter: brightness(1.1); }
+.btn-primary:active:not(:disabled) { transform: scale(0.98); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+
+/* Number inputs remove arrows */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
