@@ -1,4 +1,4 @@
-"use client";
+import { useEffect, useState } from "react";
 import {
   AreaChart,
   Area,
@@ -39,6 +39,11 @@ const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
 };
 
 export default function PriceLineChart({ data = [], symbol = "" }: { data: PriceDataPoint[], symbol?: string }) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   if (data.length === 0) return null;
 
   return (
@@ -52,43 +57,45 @@ export default function PriceLineChart({ data = [], symbol = "" }: { data: Price
           Daily Close History
         </div>
       </div>
-      <div className="w-full h-[420px] min-w-0" style={{ minWidth: 0 }}>
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-            <defs>
-              <linearGradient id="priceGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#10b981" stopOpacity={0.2} />
-                <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <CartesianGrid strokeDasharray="0" stroke="rgba(255,255,255,0.03)" vertical={false} />
-            <XAxis
-              dataKey="date"
-              tick={{ fontSize: 9, fill: "rgba(255,255,255,0.2)", fontWeight: 700 }}
-              axisLine={false}
-              tickLine={false}
-              dy={10}
-              interval={Math.floor(data.length / 6)}
-            />
-            <YAxis
-              tick={{ fontSize: 9, fill: "rgba(255,255,255,0.2)", fontWeight: 700 }}
-              axisLine={false}
-              tickLine={false}
-              domain={['auto', 'auto']}
-              tickFormatter={(v) => `$${v >= 1000 ? `${(v / 1000).toFixed(1)}k` : v}`}
-            />
-            <Tooltip content={<CustomTooltip />} cursor={{ stroke: "rgba(255,255,255,0.1)", strokeWidth: 1 }} />
-            <Area
-              type="monotone"
-              dataKey="close"
-              stroke="#10b981"
-              strokeWidth={2.5}
-              fill="url(#priceGrad)"
-              dot={false}
-              activeDot={{ r: 4, strokeWidth: 0, fill: "#10b981" }}
-            />
-          </AreaChart>
-        </ResponsiveContainer>
+      <div className="w-full h-[420px] min-w-0" style={{ minWidth: 0, minHeight: 0 }}>
+        {mounted && (
+          <ResponsiveContainer width="100%" height="100%" debounce={50}>
+            <AreaChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <defs>
+                <linearGradient id="priceGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.2} />
+                  <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="0" stroke="rgba(255,255,255,0.03)" vertical={false} />
+              <XAxis
+                dataKey="date"
+                tick={{ fontSize: 9, fill: "rgba(255,255,255,0.2)", fontWeight: 700 }}
+                axisLine={false}
+                tickLine={false}
+                dy={10}
+                interval={Math.floor(data.length / 6)}
+              />
+              <YAxis
+                tick={{ fontSize: 9, fill: "rgba(255,255,255,0.2)", fontWeight: 700 }}
+                axisLine={false}
+                tickLine={false}
+                domain={['auto', 'auto']}
+                tickFormatter={(v) => `$${v >= 1000 ? `${(v / 1000).toFixed(1)}k` : v}`}
+              />
+              <Tooltip content={<CustomTooltip />} cursor={{ stroke: "rgba(255,255,255,0.1)", strokeWidth: 1 }} />
+              <Area
+                type="monotone"
+                dataKey="close"
+                stroke="#10b981"
+                strokeWidth={2.5}
+                fill="url(#priceGrad)"
+                dot={false}
+                activeDot={{ r: 4, strokeWidth: 0, fill: "#10b981" }}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        )}
       </div>
     </div>
   );
